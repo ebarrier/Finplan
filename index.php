@@ -1,15 +1,19 @@
 <?php
 require_once "config.php";
 include "header.php";
-$conn = new mysqli(DB_SERVER, 
-DB_USER, 
-DB_PASS, 
-DB_NAME);
-if ($conn->connect_error)
-  die("Connection to database failed:".$conn->connect_error);
-$conn->query("set names utf8");
 
+try {
+    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME, DB_USER, DB_PASS);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
 ?>
+
 
 <h1>Etienne's financial planner</h1>
 <p>Welcome to the financial planner to manage your budget</p>
