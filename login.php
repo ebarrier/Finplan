@@ -4,18 +4,27 @@ include "header.php";
 require_once "config.php";
 var_dump($_POST);
 
-$conn = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-if ($conn->connect_error)
-  die("Connection to database failed:".$conn->connect_error);
-$conn->query("set names utf8");
+try {
+    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME, DB_USER, DB_PASS);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
+$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 function checkCredentials($dbFieldToCheck, $conn, $username, $password) {
-    $statement = $conn->prepare("SELECT id FROM user WHERE ".$dbFieldToCheck." = ? AND password = PASSWORD(?)"); // not to use this in production!
+    $statement = $conn->prepare("SELECT id FROM user WHERE ".$dbFieldToCheck." = :credential AND password = PASSWORD(:password)"); // not to use this in production!
     if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-    $statement->bind_param("ss", $username, $password);
+    $statement->bindParam(':credential', $username);
+    $statement->bindParam(':password', $password);
     $statement->execute();
-    $result = $statement->get_result();
-    $row = $result->fetch_assoc();
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
 
