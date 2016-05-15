@@ -21,8 +21,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <p>Welcome to the financial planner to manage your budget</p>
 
 <?php
-if (array_key_exists("userid", $_SESSION)) {
-    //If the $_SESSION["user"] is set we say hello with his name
+if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
+    //If the $_SESSION["userid"] is set we say hello with his name
     echo "Session user in session: ";
     var_dump($_SESSION["userid"]); //This is just to show the content of $_SESSION variable
     $results = $conn->query("SELECT * FROM user WHERE id = " . $_SESSION["userid"]);
