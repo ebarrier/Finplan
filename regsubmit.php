@@ -26,11 +26,11 @@ VALUES (:username, :email, :hashed_password, :firstname, :lastname)"); //the :ar
 
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); //check if an error happens
 
-$statement->bindParam('username', $_POST["username"]);
-$statement->bindParam('email', $_POST["email"]);
-$statement->bindParam('hashed_password', password_hash($_POST["password"], PASSWORD_DEFAULT));
-$statement->bindParam('firstname', $_POST["firstname"]);
-$statement->bindParam('lastname', $_POST["lastname"]);
+$statement->bindParam(':username', $_POST["username"]);
+$statement->bindParam(':email', $_POST["email"]);
+$statement->bindParam(':hashed_password', password_hash($_POST["password"], PASSWORD_DEFAULT));
+$statement->bindParam(':firstname', $_POST["firstname"]);
+$statement->bindParam(':lastname', $_POST["lastname"]);
 
 if ($statement->execute()) {
   echo "Registration successful. Thank you! <br> <a href=\"index.php\">Go back to main page</a>";
