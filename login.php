@@ -17,33 +17,37 @@ catch(PDOException $e)
 $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
 function checkCredentials($dbFieldToCheck, $conn, $username, $password) {
-    $statement = $conn->prepare("SELECT id FROM user WHERE ".$dbFieldToCheck." = :credential AND password = PASSWORD(:password)"); // not to use this in production!
-    if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+    $statement = $conn->prepare("SELECT id, password FROM user WHERE ".$dbFieldToCheck." = :credential");
+    if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); 
     $statement->bindParam(':credential', $username);
-    $statement->bindParam(':password', $password);
     $statement->execute();
     $row = $statement->fetch(PDO::FETCH_ASSOC);
-    return $row;
+
+    if(password_verify($password, $row["password"])) {
+        return $row["id"];
+    }
+    return false;
 }
 
 $row1 = checkCredentials('email', $conn, $_POST["username/email"], $_POST["password"]);
 $row2 = checkCredentials('username', $conn, $_POST["username/email"], $_POST["password"]);
 
-var_dump($row1);
-var_dump($row2);
+//echo(" || ");
+//var_dump($row1);
+//echo(" || ");
+//var_dump($row2);
 
 if($row1) { //if the key-value pair user_id-password exists
-    $_SESSION["userid"] = $row1["id"]; // This just stores user row number
+    $_SESSION["userid"] = $row1; // This just stores user row number
     header('Location: index.php'); //This will redirect back to index.php
 } elseif($row2) {
-    $_SESSION["userid"] = $row2["id"];
+    $_SESSION["userid"] = $row2;
     header('Location: index.php');
 } else { ?>
   <p>It looks like you are not known sorry. Please <a href="registration.php">sign up</a>  to enjoy our services or go back to <a href="index.php">main page</a>.</p>
 
 <?php 
-var_dump($_SESSION["userid"]);
+//var_dump($_SESSION["userid"]);
 } 
 ?>
