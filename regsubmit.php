@@ -1,10 +1,19 @@
 <?php
 require_once "config.php";
 include "header.php";
-$conn = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-if ($conn->connect_error)
-  die("Connection to database failed:".$conn->connect_error);
-$conn->query("set names utf8");
+
+try {
+    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME, DB_USER, DB_PASS);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //echo "Connected successfully";
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
+$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $statement = $conn->prepare(
 "INSERT INTO `user` (
@@ -13,17 +22,16 @@ $statement = $conn->prepare(
     `password`,
     `fname`,
     `lname`)
-VALUES (?, ?, PASSWORD(?), ?, ?)"); //the "?" will be replaced by the following values
+VALUES (:username, :email, :hashed_password, :firstname, :lastname)"); //the :arguments will be replaced below
 
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); //check if an error happens
 
-$statement->bind_param("sssss", //"s" stands for "String"
-    //POST values coming from the body of the request of the page registration.php
-    $_POST["username"],
-    $_POST["email"],    
-    $_POST["password"],
-    $_POST["firstname"],
-    $_POST["lastname"]);
+$statement->bindParam('username', $_POST["username"]);
+$statement->bindParam('email', $_POST["email"]);
+$statement->bindParam('hashed_password', password_hash($_POST["password"], PASSWORD_DEFAULT));
+$statement->bindParam('firstname', $_POST["firstname"]);
+$statement->bindParam('lastname', $_POST["lastname"]);
+
 if ($statement->execute()) {
   echo "Registration successful. Thank you! <br> <a href=\"index.php\">Go back to main page</a>";
 } else {
