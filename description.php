@@ -32,14 +32,16 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
 
 <form method="post" action="cart.php">
   <input type="hidden" name="id" value="<?=$_GET["id"];?>"/>
+<!--
   <input type="hidden" name="count" value="1"/>
+-->
   <input type="submit" value="Add to cart"/>
-<select name="count">
-  <option value="one">1</option>
-  <option value="two">2</option>
-  <option value="three">3</option>
-  <option value="four">4</option>
-</select>
+	<select name="count">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	</select>
 </form>
 
 

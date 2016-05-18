@@ -58,8 +58,6 @@ $statement->execute();
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
     echo "<li><a href=\"description.php?id=" . $row["id"] . "\">" .  $row["name"] . "</a> " . $row["price"] . "eur</li>";
 }
-
-$conn->close();
 ?>
 
 <p>
