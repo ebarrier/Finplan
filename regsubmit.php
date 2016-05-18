@@ -15,6 +15,7 @@ catch(PDOException $e)
 $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+//Statement to create user in DB
 $statement = $conn->prepare(
 "INSERT INTO `user` (
     `username`,
@@ -26,12 +27,14 @@ VALUES (:username, :email, :hashed_password, :firstname, :lastname)"); //the :ar
 
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); //check if an error happens
 
+//We bind all the parameters
 $statement->bindParam(':username', $_POST["username"]);
 $statement->bindParam(':email', $_POST["email"]);
 $statement->bindParam(':hashed_password', password_hash($_POST["password"], PASSWORD_DEFAULT));
 $statement->bindParam(':firstname', $_POST["firstname"]);
 $statement->bindParam(':lastname', $_POST["lastname"]);
 
+//We execute the statement to create user with POST values
 if ($statement->execute()) {
   echo "Registration successful. Thank you! <br> <a href=\"index.php\">Go back to main page</a>";
 } else {
