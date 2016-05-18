@@ -1,9 +1,9 @@
 <?php
-require_once "config.php";
 include "header.php";
+require_once "config.php";
 
 try {
-    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME, DB_USER, DB_PASS);
+    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //echo "Connected successfully";
@@ -17,8 +17,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 
 
-<h1>Etienne's financial planner</h1>
-<p>Welcome to the financial planner to manage your budget</p>
+<h1>Etienne's webshop</h1>
 
 <?php
 if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
@@ -47,6 +46,21 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
   </form> 
 <?php 
 } ?>
+
+<h2>Take a look at our products:</h2>
+<ul>
+	
+<?php 
+$statement = $conn->prepare("SELECT id, name, price FROM product");
+//$result = $conn->query("SELECT id, name, price FROM product");
+$statement->execute();
+
+while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+    echo "<li><a href=\"description.php?id=" . $row["id"] . "\">" .  $row["name"] . "</a> " . $row["price"] . "eur</li>";
+}
+
+$conn->close();
+?>
 
 <p>
  <a href="http://www.itcollege.ee">itcollege.ee</a>
