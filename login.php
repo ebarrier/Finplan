@@ -2,10 +2,9 @@
 
 include "header.php";
 require_once "config.php";
-var_dump($_POST);
 
 try {
-    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME, DB_USER, DB_PASS);
+    $conn = new PDO('mysql:host='.DB_SERVER.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //echo "Connected successfully";
@@ -17,6 +16,7 @@ catch(PDOException $e)
 $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+//function to check if the email or username provided match the password
 function checkCredentials($dbFieldToCheck, $conn, $username, $password) {
     $statement = $conn->prepare("SELECT id, password FROM user WHERE ".$dbFieldToCheck." = :credential");
     if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); 
@@ -30,14 +30,11 @@ function checkCredentials($dbFieldToCheck, $conn, $username, $password) {
     return false;
 }
 
+//we call the function above twice (for email and for username)
 $row1 = checkCredentials('email', $conn, $_POST["username/email"], $_POST["password"]);
 $row2 = checkCredentials('username', $conn, $_POST["username/email"], $_POST["password"]);
 
-//echo(" || ");
-//var_dump($row1);
-//echo(" || ");
-//var_dump($row2);
-
+//if one of the function calls above is succesful, user is logged in, otherwise we ask him to try again or to sign up
 if($row1) { //if the key-value pair user_id-password exists
     $_SESSION["userid"] = $row1; // This just stores user row number
     header('Location: index.php'); //This will redirect back to index.php
@@ -48,6 +45,6 @@ if($row1) { //if the key-value pair user_id-password exists
   <p>It looks like you are not known sorry. Please <a href="registration.php">sign up</a>  to enjoy our services or go back to <a href="index.php">main page</a>.</p>
 
 <?php 
-//var_dump($_SESSION["userid"]);
 } 
+include 'footer.php';
 ?>
