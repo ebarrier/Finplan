@@ -2,7 +2,7 @@
 include "header.php";
 ?>
 
-<h1> Registration page</h1>
+<h1>Registration page</h1>
 
 <form method="post" action="regsubmit.php">
   <div>
@@ -16,9 +16,14 @@ include "header.php";
   </div>    
 
   <div>
-  <label for="password">Password</label>
-  <input type="password" name="password" id="password" required/>
-  </div>   
+  <label for="password1">Password</label>
+  <input type="password" name="password1" id="password1" required/>
+  </div>
+
+  <div>
+  <label for="password2">Repeat password</label>
+  <input type="password" name="password2" id="password2" required/>
+  </div>
 
   <div>
   <label for="firstname">First-name</label>
