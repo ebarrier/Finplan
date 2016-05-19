@@ -8,7 +8,7 @@ session_start();
 <head>
 <meta charset="utf-8"/>
 <meta name="description" content="Etienne's webshop">
-<title>Etienne's financial planner</title>
+<title>Etienne's webshop</title>
 </head>
 
 
