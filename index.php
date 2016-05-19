@@ -19,7 +19,7 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
     <a href="logout.php">Log out<a></p>
 <?php
 } else { //else we display the login page
-    ?> <p>Enter your financial planner<p>
+    ?> <p>Enter your private area<p>
   <form action="login.php" method="post">
     <input type="text" name="username/email" placeholder="username or email" required/>
     <input type="password" name="password" placeholder="password" required/>
@@ -34,6 +34,8 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
   </form> 
 <?php 
 } ?>
+
+<p><a href="cart.php">View your cart</a></p>
 
 <h2>Take a look at our products:</h2>
 <ul>

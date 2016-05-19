@@ -2,7 +2,6 @@
 
 include "header.php";
 require_once "config.php";
-
 include "dbconn.php";
 
 //function to check if the email or username provided match the password
