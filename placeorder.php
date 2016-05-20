@@ -3,17 +3,16 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
-echo 'Includes worked';
+if($_SESSION["userid"]==null) {
+    header("index.php");
+}
 
 $statement = $conn->prepare("INSERT INTO `order` (user_id) VALUES (:userid)");
-echo 'Conn works';
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':userid', $_SESSION["userid"]);
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
-echo 'BinParam works';
 
 $order_id = $conn->lastInsertId(); // This contains the ID for the inserted order
-echo 'Order id: ', $order_id;
 
 // This inserts rows to order_item table
 $statement = $conn->prepare(
