@@ -38,7 +38,8 @@ if($_SESSION["cart"]==null) {
         <li>
             <?php echo $count; ?> x <a href="description.php?id=<?php echo $product_id ?>">
             <?php echo $row['name'] ?></a>
-            <?php echo $row['price'] ?>€ => <?php echo $row['price']*$count, '€'; ?>
+            <?php echo $row['price'] ?>€ => 
+            <?php echo $row['price']*$count, '€'; ?>
           <form method="post">
             <input type="hidden" name="id" value="<?php echo $product_id; ?>"/>
             <input type="hidden" name="count" value="-1"/>
