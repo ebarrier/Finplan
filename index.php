@@ -16,7 +16,9 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
     $row = $results->fetch(PDO::FETCH_ASSOC);
     echo ("<p>Hello " . $row["fname"] . " " . $row["lname"]);?>
     <br>
-    <a href="logout.php">Log out<a></p>
+    <a href="orders.php">My orders</a>
+    <br>
+    <a href="logout.php">Log out</a></p>
 <?php
 } else { //else we display the login page
     ?> <p>Enter your private area<p>
