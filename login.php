@@ -25,10 +25,10 @@ $row2 = checkCredentials('username', $conn, $_POST["username/email"], $_POST["pa
 //if one of the function calls above is succesful, user is logged in, otherwise we ask him to try again or to sign up
 if($row1) { //if the key-value pair user_id-password exists
     $_SESSION["userid"] = $row1; // This just stores user row number
-    header('Location: index.php'); //This will redirect back to index.php
+    header('Location:'.$_SERVER['HTTP_REFERER']); //This will redirect back to index.php
 } elseif($row2) {
     $_SESSION["userid"] = $row2;
-    header('Location: index.php');
+    header('Location:'.$_SERVER['HTTP_REFERER']);
 } else { ?>
   <p>It looks like you are not known sorry. Please <a href="registration.php">sign up</a>  to enjoy our services or go back to <a href="index.php">main page</a>.</p>
 
