@@ -8,7 +8,13 @@ if($_SESSION["userid"]==null) {
     header("index.php");
 }
 
-
+function clearUnsetDate($inputDate) {
+    if($inputDate=="0000-00-00 00:00:00") {
+        echo "-";
+    } else {
+        echo $inputDate;
+    }
+}
 
 $statement = $conn->prepare("SELECT
   `order`.`id` AS `orderid`,
@@ -39,11 +45,25 @@ $prevOrderId = null;
 while ($result = $statement->fetch(PDO::FETCH_ASSOC)) { 
     if($prevOrderId != $result["orderid"]) { ?>
         <br>
-        <li>Order #: <?php echo $result["orderid"]; ?>
+        <li>Order #: <?php echo $result["orderid"]; 
+        $statement2 = $conn->prepare(
+                "SELECT order_item.count*product.price AS subTotal
+                FROM product
+                JOIN order_item
+                ON product.id = order_item.product_id
+                WHERE order_item.order_id = :orderId"); 
+                if (!$statement2) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+                $statement2->bindParam(':orderId', $result["orderid"]);
+                if (!$statement2->execute()) die("Execute failed: (" . $statement2->errno . ") " . $statement2->error);
+                $orderAmount=null;
+                while ($result2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
+                    $orderAmount += $result2["subTotal"];
+                }?>
             <ul>
-                <li>Order date: <?php echo $result["ordercreated"]; ?></li>
-                <li>Paid date: <?php echo $result["paymentdate"]; ?></li>
-                <li>Shipment date: <?php echo $result["shipmentdate"]; ?></li>
+                <li>Total: <?php echo $orderAmount; ?>€</li>
+                <li>Order date: <?php clearUnsetDate($result["ordercreated"]); ?></li>
+                <li>Paid date: <?php clearUnsetDate($result["paymentdate"]); ?></li>
+                <li>Shipment date: <?php clearUnsetDate($result["shipmentdate"]); ?></li>
     <?php } else { ?> <ul> <?php } ?>
                 <li>
                     <a href="description.php/?id=<?php echo $result["productid"]; ?>">
