@@ -8,6 +8,7 @@ if($_SESSION["userid"]==null) {
     header("index.php");
 }
 
+//Function to display better unset dates
 function clearUnsetDate($inputDate) {
     if($inputDate=="0000-00-00 00:00:00") {
         echo "-";
@@ -43,9 +44,11 @@ if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " .
 <?php
 $prevOrderId = null;
 while ($result = $statement->fetch(PDO::FETCH_ASSOC)) { 
+    //We display the orders by order id
     if($prevOrderId != $result["orderid"]) { ?>
         <br>
-        <li>Order #: <?php echo $result["orderid"]; 
+        <li>Order #: <?php echo $result["orderid"];
+        //We calculate the total price of the order
         $statement2 = $conn->prepare(
                 "SELECT order_item.count*product.price AS subTotal
                 FROM product
