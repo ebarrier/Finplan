@@ -13,6 +13,7 @@ $statement->bindParam(':userid', $_SESSION["userid"]);
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
 
 $order_id = $conn->lastInsertId(); // This contains the ID for the inserted order
+$_SESSION["orderid"] = $order_id;
 
 // This inserts rows to order_item table
 $statement = $conn->prepare(
@@ -29,7 +30,7 @@ foreach ($_SESSION["cart"] as $product_id => $count) {
 
 // We reset shopping cart:
 $_SESSION["cart"] = array();
-header('Location: orders.php');
+header('Location: paymentpage.php');
 ?>
 
 

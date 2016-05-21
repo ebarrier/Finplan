@@ -67,6 +67,7 @@ if($_SESSION["cart"]==null) {
         <form method="post" action="placeorder.php">
             <?php echo 'Total price: ', $grantotal, '€';?>
             <input type="submit" value="checkout"/>
+            When clicking "Checkout" you will be redirected on the bank card payment page
         </form>
         </p>
     <?php
