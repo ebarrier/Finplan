@@ -4,7 +4,6 @@ require_once "config.php";
 include "dbconn.php";
 ?>
 
-
 <h1>Etienne's webshop</h1>
 
 <?php
@@ -17,6 +16,8 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
     echo ("<p>Hello " . $row["fname"] . " " . $row["lname"]);?>
     <br>
     <a href="orders.php">My orders</a>
+    <br>
+    <a href="profile.php">My profile</a>
     <br>
     <a href="logout.php">Log out</a></p>
 <?php
