@@ -87,7 +87,7 @@ while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
     </div>
 
     <div>
-        <input type="hidden" name="orderid" id="orderid" value="<?php echo $_SESSION["orderId"]; ?>"/>
+        <input type="hidden" name="orderid" id="orderid" value="<?php echo $orderid; ?>"/>
     </div>
 
     <div>
