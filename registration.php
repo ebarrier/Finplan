@@ -1,9 +1,5 @@
 <?php
 include "header.php";
-
-if($_SESSION["userid"]!=null) {
-    header("index.php");
-}
 ?>
 
 <h1>Registration page</h1>

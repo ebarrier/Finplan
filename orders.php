@@ -3,12 +3,6 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
-var_dump($_POST);
-echo '<pre>';
-var_dump($_SESSION);
-echo '</pre>';
-
-
 if($_SESSION["userid"]==null) {
     header("index.php");
 }

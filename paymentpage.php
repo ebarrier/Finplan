@@ -7,11 +7,6 @@ include "dbconn.php";
     //header("index.php");
 //}
 
-var_dump($_POST);
-echo '<pre>';
-var_dump($_SESSION);
-echo '</pre>';
-
 if (array_key_exists("orderid", $_POST)) {
     $orderid = $_POST["orderid"];
     echo "Post orderid: ", $_POST["orderid"];
