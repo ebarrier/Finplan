@@ -7,6 +7,23 @@ include "dbconn.php";
     //header("index.php");
 //}
 
+var_dump($_POST);
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
+
+if (array_key_exists("orderid", $_POST)) {
+    $orderid = $_POST["orderid"];
+    echo "Post orderid: ", $_POST["orderid"];
+} 
+elseif (array_key_exists("orderid", $_SESSION)) {
+    $orderid = $_SESSION["orderid"];
+    echo "Session orderid: ", $_SESSION["orderid"];
+} 
+else {
+    header('index.php');
+}
+
 $statement = $conn->prepare(
                 "SELECT order_item.count*product.price AS subTotal
                 FROM product
@@ -14,7 +31,7 @@ $statement = $conn->prepare(
                 ON product.id = order_item.product_id
                 WHERE order_item.order_id = :orderId"); 
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-$statement->bindParam(':orderId', $_SESSION["orderId"]);
+$statement->bindParam(':orderId', $orderid);
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
 $orderAmount=null;
 while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -77,5 +94,12 @@ while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
         <input type="submit" value="Pay"/>
     </div>
 </form>
+
+<br>
+<a href="index.php">Go back to main page</a>
+
+<?php
+include "footer.php";
+?>
 
 

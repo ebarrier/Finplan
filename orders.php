@@ -3,6 +3,11 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
+var_dump($_POST);
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
+
 
 if($_SESSION["userid"]==null) {
     header("index.php");
@@ -64,6 +69,10 @@ while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
                 }?>
             <ul>
                 <li>Total: <?php echo $orderAmount; ?>€</li>
+                    <form method="post" action="paymentpage.php">
+                        <input type="hidden" name="orderid" id="orderid" value="<?php echo $result["orderid"]; ?>"/>
+                        <input type="submit" value="Pay now"/>
+                    </form>
                 <li>Order date: <?php clearUnsetDate($result["ordercreated"]); ?></li>
                 <li>Paid date: <?php clearUnsetDate($result["paymentdate"]); ?></li>
                 <li>Shipment date: <?php clearUnsetDate($result["shipmentdate"]); ?></li>
