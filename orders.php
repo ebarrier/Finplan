@@ -71,7 +71,9 @@ while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
                 <li>Total: <?php echo $orderAmount; ?>€</li>
                     <form method="post" action="paymentpage.php">
                         <input type="hidden" name="orderid" id="orderid" value="<?php echo $result["orderid"]; ?>"/>
-                        <input type="submit" value="Pay now"/>
+                        <?php if ($result["paymentdate"] == "0000-00-00 00:00:00") {
+                            echo "<input type=\"submit\" value=\"Pay now\"/>";
+                        } ?>
                     </form>
                 <li>Order date: <?php clearUnsetDate($result["ordercreated"]); ?></li>
                 <li>Paid date: <?php clearUnsetDate($result["paymentdate"]); ?></li>
