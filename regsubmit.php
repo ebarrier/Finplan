@@ -3,6 +3,10 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
+if($_SERVER['REQUEST_METHOD'] != "POST") {
+    header("index.php");
+}
+
 //Statement to create user in DB
 $statement = $conn->prepare(
 "INSERT INTO `user` (

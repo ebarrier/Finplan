@@ -3,7 +3,9 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
-var_dump($_POST);
+if($_SESSION["orderid"] == null || $_SERVER['REQUEST_METHOD'] != "POST") {
+    header("index.php");
+}
 
 $statement = $conn->prepare(
     "UPDATE `order`
