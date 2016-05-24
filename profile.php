@@ -3,54 +3,90 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
-//if($_SESSION["orderid"] == null) {
+//if($_SESSION["userid"] == null) {
     //header("index.php");
 //}
 
-var_dump($_SESSION["userid"]);
+var_dump($_POST);
 
-$statement = $conn->prepare(
+
+if($_SESSION["userid"] != null && $_SERVER['REQUEST_METHOD'] == "POST") {
+    $statement0 = $conn->prepare(
+    "UPDATE `user` 
+    SET username=:username, 
+        email=:email, 
+        fname=:fname, 
+        lname=:lname, 
+        gender=:gender, 
+        phonecode=:phonecode, 
+        phonenum=:phonenum, 
+        dob=:dob, 
+        address=:address, 
+        city=:city, 
+        postal_code=:postalcode, 
+        countryname=:countryname
+    WHERE id = :userid");
+    if (!$statement0) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+    $statement0->bindParam(':username', $_POST["username"]);
+    $statement0->bindParam(':email', $_POST["email"]);
+    $statement0->bindParam(':fname', $_POST["firstname"]);
+    $statement0->bindParam(':lname', $_POST["lastname"]);
+    $statement0->bindParam(':gender', $_POST["gender"]);
+    $statement0->bindParam(':phonecode', $_POST["phonecode"]);
+    $statement0->bindParam(':phonenum', $_POST["phonenum"]);
+    $statement0->bindParam(':dob', $_POST["dob"]);
+    $statement0->bindParam(':address', $_POST["address"]);
+    $statement0->bindParam(':city', $_POST["city"]);
+    $statement0->bindParam(':postalcode', $_POST["postalcode"]);
+    $statement0->bindParam(':countryname', $_POST["country"]);
+    $statement0->bindParam(':userid', $_SESSION["userid"]);
+    if (!$statement0->execute()) die("Execute failed: (" . $statement0->errno . ") " . $statement0->error);
+}
+
+
+
+$statement1 = $conn->prepare(
 "SELECT username, email, fname, lname, gender, phonecode, phonenum, dob, address, city, postal_code, countryname
 FROM `user`
 WHERE id = :userid");
-if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-$statement->bindParam(':userid', $_SESSION["userid"]);
-if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
-$row = $statement->fetch(PDO::FETCH_ASSOC);
+if (!$statement1) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+$statement1->bindParam(':userid', $_SESSION["userid"]);
+if (!$statement1->execute()) die("Execute failed: (" . $statement1->errno . ") " . $statement1->error);
+$row1 = $statement1->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <h1>My profile</h1>
 
-<form method="post" action="regsubmit.php">
+<form method="post" action="profile.php">
     <div>
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" value="<?php echo $row["username"];?>" placeholder="your username" required/>
+        <input type="text" name="username" id="username" value="<?php echo $row1["username"];?>" placeholder="your username" required/>
     </div> 
 
     <div>
         <label for="email">E-mail</label>
-        <input type="email" name="email" id="email" value="<?php echo $row["email"];?>" placeholder="your email" required/>
+        <input type="email" name="email" id="email" value="<?php echo $row1["email"];?>" placeholder="your email" required/>
     </div>    
 
     <div>
         <label for="firstname">First name</label>
-        <input type="text" name="firstname" id="firstname" value="<?php echo $row["fname"];?>" placeholder="your first name" required/>
+        <input type="text" name="firstname" id="firstname" value="<?php echo $row1["fname"];?>" placeholder="your first name" required/>
     </div> 
 
     <div>
         <label for="lastname">Last name</label>
-        <input type="text" name="lastname" id="lastname" value="<?php echo $row["lname"];?>" placeholder="your last name" required/>
+        <input type="text" name="lastname" id="lastname" value="<?php echo $row1["lname"];?>" placeholder="your last name" required/>
     </div>
 
     <div>
         <label for="gender">Gender</label><br>
         <?php
-        if ($row["gender"] == null) { ?>
+        if ($row1["gender"] == null) { ?>
             <input type="radio" name="gender" value="male"> Male
             <input type="radio" name="gender" value="female"> Female
         <?php
         }
-        elseif ($row["gender"] == "male") { ?>
+        elseif ($row1["gender"] == "male") { ?>
             <input type="radio" name="gender" value="male" checked> Male
             <input type="radio" name="gender" value="female"> Female
         <?php
@@ -67,22 +103,22 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
         <select name="phonecode" id="phonecode" onchange="" size="1">
             <?php
             $statement2 = $conn->query('SELECT phonecode FROM country GROUP BY phonecode ORDER BY phonecode');
-            if ($row["phonecode"] == 0) {
+            if ($row1["phonecode"] == 0) {
                 echo "<option value=\"null\">-</option>";
             }
             else {
-                echo "<option value=".$row["phonecode"].">+".$row["phonecode"]."</option>";
+                echo "<option value=".$row1["phonecode"].">+".$row1["phonecode"]."</option>";
             }
             while($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
                 echo "<option value=".$row2["phonecode"].">+".$row2["phonecode"]."</option>";
             }
             
-            if ($row["phonenum"] == 0) { ?>
+            if ($row1["phonenum"] == 0) { ?>
                 <input type="number" name="phonenum" id="phonenum" value="-" min ="0" placeholder="phone number"/>                
             <?php
             }
             else { ?>
-                <input type="number" name="phonenum" id="phonenum" value="<?php echo $row["phonenum"];?>" min ="0" placeholder="phone number"/>
+                <input type="number" name="phonenum" id="phonenum" value="<?php echo $row1["phonenum"];?>" min ="0" placeholder="phone number"/>
             <?php
             }
             ?>
@@ -92,12 +128,12 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
     <div>
         <label for="dob">Date of birth</label>
             <?php
-            if($row["dob"] == "0000-00-00") { ?>
+            if($row1["dob"] == "0000-00-00") { ?>
                 <input type="date" name="dob" min="(Date('Y')-90)-01-01" placeholder="yyyy-mm-dd">
             <?php
             }
             else { ?>
-                <input type="date" name="dob" value="<?php echo $row["dob"]; ?>" min="(Date('Y')-90)-01-01" placeholder="yyyy-mm-dd">
+                <input type="date" name="dob" value="<?php echo $row1["dob"]; ?>" min="(Date('Y')-90)-01-01" placeholder="yyyy-mm-dd">
             <?php
             }
             ?>
@@ -108,12 +144,12 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
         <div>
             <label for="address">Street</label>
                 <?php
-                if($row["address"] == null) { ?>
+                if($row1["address"] == null) { ?>
                     <input type="text" name="address" id="address" placeholder="your address"/>
                 <?php
                 }
                 else { ?>    
-                    <input type="text" name="address" id="address" value="<?php echo $row["address"];?>" placeholder="your address"/>
+                    <input type="text" name="address" id="address" value="<?php echo $row1["address"];?>" placeholder="your address"/>
                 <?php
                 }
                 ?>
@@ -122,12 +158,12 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
         <div>
             <label for="city">City</label>
                 <?php
-                if($row["city"] == null) { ?>
+                if($row1["city"] == null) { ?>
                     <input type="text" name="city" id="city" placeholder="your city"/>
                 <?php
                 }
                 else { ?>    
-                    <input type="text" name="city" id="city" value="<?php echo $row["city"];?>" placeholder="your city"/>
+                    <input type="text" name="city" id="city" value="<?php echo $row1["city"];?>" placeholder="your city"/>
                 <?php
                 }
                 ?>
@@ -136,12 +172,12 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
         <div>
             <label for="postalcode">Postal code</label>
                 <?php
-                if($row["city"] == 0) { ?>
+                if($row1["postal_code"] == 0) { ?>
                     <input type="text" name="postalcode" id="postalcode" placeholder="your postal code"/>
                 <?php
                 }
-                else { ?>    
-                    <input type="text" name="postalcode" id="postalcode" value="<?php echo $row["postal_code"];?>" placeholder="your postal code"/>
+                else { ?>
+                    <input type="text" name="postalcode" id="postalcode" value="<?php echo $row1["postal_code"];?>" placeholder="your postal code"/>
                 <?php
                 }
                 ?>
@@ -152,14 +188,14 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
             <select name="country" id="country" onchange="" size="1">
                 <?php
                 $statement3 = $conn->query('SELECT nicename FROM country');
-                if ($row["country_id"] == 0) {
+                if ($row1["countryname"] == "0") {
                     echo "<option value=\"null\">-</option>";
                 }
                 else {
-                    echo "<option value=".$row["countryname"].">+".$row["countryname"]."</option>";
+                    echo "<option value=".$row1["countryname"].">".$row1["countryname"]."</option>";
                 }
                 while($row3 = $statement3->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<option value=".$row3["nicename"].">+".$row3["nicename"]."</option>";
+                    echo "<option value=".$row3["nicename"].">".$row3["nicename"]."</option>";
                 }
                 ?>
             </select>
