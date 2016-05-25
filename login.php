@@ -9,7 +9,7 @@ function checkCredentials($dbFieldToCheck, $conn, $username, $password) {
     $statement = $conn->prepare("SELECT id, password FROM user WHERE ".$dbFieldToCheck." = :credential");
     if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); 
     $statement->bindParam(':credential', $username);
-    $statement->execute();
+    if (!$statement->execute()) die("Execute failed: (" . $statement0->errno . ") " . $statement0->error);
     $row = $statement->fetch(PDO::FETCH_ASSOC);
 
     if(password_verify($password, $row["password"])) {
