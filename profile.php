@@ -3,16 +3,11 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
-//if($_SESSION["userid"] == null) {
-    //header("index.php");
-//}
-
 var_dump($_POST);
 
-
 if($_SESSION["userid"] != null && $_SERVER['REQUEST_METHOD'] == "POST") {
-    $statement0 = $conn->prepare(
-    "UPDATE `user` 
+    $statement0 = $conn->prepare("
+    UPDATE `user` 
     SET username=:username, 
         email=:email, 
         fname=:fname, 
@@ -41,12 +36,14 @@ if($_SESSION["userid"] != null && $_SERVER['REQUEST_METHOD'] == "POST") {
     $statement0->bindParam(':countryname', $_POST["country"]);
     $statement0->bindParam(':userid', $_SESSION["userid"]);
     if (!$statement0->execute()) die("Execute failed: (" . $statement0->errno . ") " . $statement0->error);
+} else {
+    header("index.php");
 }
 
 
 
-$statement1 = $conn->prepare(
-"SELECT username, email, fname, lname, gender, phonecode, phonenum, dob, address, city, postal_code, countryname
+$statement1 = $conn->prepare("
+SELECT username, email, fname, lname, gender, phonecode, phonenum, dob, address, city, postal_code, countryname
 FROM `user`
 WHERE id = :userid");
 if (!$statement1) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
@@ -57,7 +54,7 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
 
 <h1>My profile</h1>
 
-<form method="post" action="profile.php">
+<form method="post">
     <div>
         <label for="username">Username</label>
         <input type="text" name="username" id="username" value="<?php echo $row1["username"];?>" placeholder="your username" required/>
@@ -77,6 +74,8 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
         <label for="lastname">Last name</label>
         <input type="text" name="lastname" id="lastname" value="<?php echo $row1["lname"];?>" placeholder="your last name" required/>
     </div>
+    
+    <a href="changepass.php">Change password</a>
 
     <div>
         <label for="gender">Gender</label><br>
