@@ -11,7 +11,10 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
     //If the $_SESSION["userid"] is set we say hello with his name
     echo "Session user in session: ";
     var_dump($_SESSION["userid"]); //This is just to show the content of $_SESSION variable
-    $results = $conn->query("SELECT * FROM user WHERE id = " . $_SESSION["userid"]);
+    $results = $conn->query("
+        SELECT * 
+        FROM user 
+        WHERE id = " . $_SESSION["userid"]);
     $row = $results->fetch(PDO::FETCH_ASSOC);
     echo ("<p>Hello " . $row["fname"] . " " . $row["lname"]);?>
     <br>
@@ -41,10 +44,12 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
 <p><a href="cart.php">View your cart</a></p>
 
 <h2>Take a look at our products:</h2>
-<ul class="thumbnails">
+<ul class="listProducts">
 	
 <?php 
-$statement = $conn->prepare("SELECT id, name, price, hash FROM product");
+$statement = $conn->prepare("
+    SELECT id, name, price, hash 
+    FROM product");
 //$result = $conn->query("SELECT id, name, price FROM product");
 $statement->execute();
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) { ?>
@@ -56,7 +61,7 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) { ?>
 ?>
 </ul>
 <p>
- <a href="http://www.itcollege.ee">itcollege.ee</a>
+<a href="http://www.itcollege.ee">itcollege.ee</a>
 </p>
 
 <?php

@@ -7,7 +7,9 @@ if($_SESSION["userid"]==null) {
     header("index.php");
 }
 
-$statement = $conn->prepare("INSERT INTO `order` (user_id) VALUES (:userid)");
+$statement = $conn->prepare("
+    INSERT INTO `order` (user_id) 
+    VALUES (:userid)");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':userid', $_SESSION["userid"]);
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
@@ -16,8 +18,9 @@ $order_id = $conn->lastInsertId(); // This contains the ID for the inserted orde
 $_SESSION["orderid"] = $order_id;
 
 // This inserts rows to order_item table
-$statement = $conn->prepare(
-    "INSERT INTO order_item (order_id, product_id, count) VALUES (:orderid,:productid,:productcount)");
+$statement = $conn->prepare("
+    INSERT INTO order_item (order_id, product_id, count) 
+    VALUES (:orderid,:productid,:productcount)");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 foreach ($_SESSION["cart"] as $product_id => $count) {
     $statement->bindParam(':orderid', $order_id);

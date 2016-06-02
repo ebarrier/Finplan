@@ -19,12 +19,12 @@ else {
     header('index.php');
 }
 
-$statement = $conn->prepare(
-                "SELECT order_item.count*product.price AS subTotal
-                FROM product
-                JOIN order_item
-                ON product.id = order_item.product_id
-                WHERE order_item.order_id = :orderId"); 
+$statement = $conn->prepare("
+    SELECT order_item.count*product.price AS subTotal
+    FROM product
+    JOIN order_item
+    ON product.id = order_item.product_id
+    WHERE order_item.order_id = :orderId"); 
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':orderId', $orderid);
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);

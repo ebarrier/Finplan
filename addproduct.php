@@ -35,7 +35,9 @@ if (array_key_exists("uploaded_image", $_FILES)) {
 	}
 
     //DB query
-    $statement = $conn->prepare("INSERT INTO product (name, description, type, price, hash) VALUES (:name, :desc, :type, :price, :hash)");
+    $statement = $conn->prepare("
+        INSERT INTO product (name, description, type, price, hash) 
+        VALUES (:name, :desc, :type, :price, :hash)");
     $statement->bindParam(':name', $_POST["product_name"]);
     $statement->bindParam(':desc', $_POST["product_desc"]);
     $statement->bindParam(':type', $_POST["product_type"]);
@@ -45,7 +47,7 @@ if (array_key_exists("uploaded_image", $_FILES)) {
 
     ?>
     <p>The product <?=$_POST["product_name"]?> has been added successfully!</p>
-    
+
 <?php
 }
 ?>
@@ -66,7 +68,8 @@ if (array_key_exists("uploaded_image", $_FILES)) {
     <textarea name="product_desc" rows="10" cols="50"></textarea><br>
     
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    Select product picture (max 2M): <input id="file" type="file" name="uploaded_image" accept="image/*"/><br>
+    Select product picture (max 2M): 
+    <input id="file" type="file" name="uploaded_image" accept="image/*"/><br>
     <input type="submit" value="Add product"/>
 </form><br>
 
@@ -76,7 +79,8 @@ $statement = $conn->prepare("SELECT id, name, price FROM product");
 $statement->execute();
 
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-    echo "<li><a href=\"description.php?id=" . $row["id"] . "\">" .  $row["name"] . "</a> " . $row["price"] . "eur</li>";
+    echo "<li><a href=\"description.php?id=" . $row["id"] . "\">" .  
+        $row["name"] . "</a> " . $row["price"] . "eur</li>";
 }
 ?>
 

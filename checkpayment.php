@@ -7,8 +7,8 @@ if($_SESSION["orderid"] == null || $_SERVER['REQUEST_METHOD'] != "POST") {
     header("index.php");
 }
 
-$statement = $conn->prepare(
-    "UPDATE `order`
+$statement = $conn->prepare("
+    UPDATE `order`
     SET paid=now()
     WHERE id = :orderid");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);

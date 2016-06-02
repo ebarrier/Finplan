@@ -6,7 +6,10 @@ include "dbconn.php";
 
 //function to check if the email or username provided match the password
 function checkCredentials($dbFieldToCheck, $conn, $username, $password) {
-    $statement = $conn->prepare("SELECT id, password FROM user WHERE ".$dbFieldToCheck." = :credential");
+    $statement = $conn->prepare("
+        SELECT id, password 
+        FROM user 
+        WHERE ".$dbFieldToCheck." = :credential");
     if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error); 
     $statement->bindParam(':credential', $username);
     if (!$statement->execute()) die("Execute failed: (" . $statement0->errno . ") " . $statement0->error);

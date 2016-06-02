@@ -3,7 +3,10 @@ include "header.php";
 require_once "config.php";
 include "dbconn.php";
 
-$statement = $conn->prepare("SELECT name, description, price FROM product WHERE id = :productID");
+$statement = $conn->prepare("
+    SELECT name, description, price 
+    FROM product 
+    WHERE id = :productID");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':productID', $_GET["id"]); //GET to extract it from the page's URL (?id=12)
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);

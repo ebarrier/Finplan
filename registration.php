@@ -6,37 +6,37 @@ include "header.php";
 
 <form method="post" action="regsubmit.php">
   <div>
-  <label for="username">Username</label>
-  <input type="text" name="username" id="username" required/>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required/>
   </div> 
 
   <div>
-  <label for="email">E-mail</label>
-  <input type="email" name="email" id="email" required/>
+    <label for="email">E-mail</label>
+    <input type="email" name="email" id="email" required/>
   </div>    
 
   <div>
-  <label for="password1">Password</label>
-  <input type="password" name="password1" id="password1" required/>
+    <label for="password1">Password</label>
+    <input type="password" name="password1" id="password1" required/>
   </div>
 
   <div>
-  <label for="password2">Repeat password</label>
-  <input type="password" name="password2" id="password2" required/>
+    <label for="password2">Repeat password</label>
+    <input type="password" name="password2" id="password2" required/>
   </div>
 
   <div>
-  <label for="firstname">First-name</label>
-  <input type="text" name="firstname" id="firstname" required/>
+    <label for="firstname">First-name</label>
+    <input type="text" name="firstname" id="firstname" required/>
   </div> 
 
   <div>
-  <label for="lastname">Last-name</label>
-  <input type="text" name="lastname" id="lastname" required/>
+    <label for="lastname">Last-name</label>
+    <input type="text" name="lastname" id="lastname" required/>
   </div> 
 
   <div>
-  <input type="submit" value="Sign-up"/>
+    <input type="submit" value="Sign-up"/>
   </div>
   
 </form>
