@@ -10,7 +10,7 @@ if (array_key_exists("uploaded_image", $_FILES)) {
     if (strpos($mimetype, "image/") != 0) // This is basically mimetype.startswith("image/")
         die("Go away! Only images allowed!");
     $checksum = sha1(file_get_contents(
-        $_FILES["uploaded_image"]["tmp_name"])) . "." .
+        $_FILES["uploaded_image"]["tmp_name"])) . "." . 
         pathinfo($_FILES["uploaded_image"]["name"], PATHINFO_EXTENSION);
 
     // Keep the original image in uploads/ folder

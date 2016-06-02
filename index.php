@@ -41,15 +41,17 @@ if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
 <p><a href="cart.php">View your cart</a></p>
 
 <h2>Take a look at our products:</h2>
-<ul>
+<ul class="thumbnails">
 	
 <?php 
-$statement = $conn->prepare("SELECT id, name, price FROM product");
+$statement = $conn->prepare("SELECT id, name, price, hash FROM product");
 //$result = $conn->query("SELECT id, name, price FROM product");
 $statement->execute();
-
-while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-    echo "<li><a href=\"description.php?id=" . $row["id"] . "\">" .  $row["name"] . "</a> " . $row["price"] . "eur</li>";
+while ($row = $statement->fetch(PDO::FETCH_ASSOC)) { ?>
+    <li><a href="description.php?id=<?=$row["id"]?>"><?=$row["name"]?></a> <?=$row["price"]?>eur
+    <img src="thumbnails/<?=$row['hash']?>" title="<?=$row['name']?>"/ >
+    </li><br>
+<?php
 }
 ?>
 </ul>
