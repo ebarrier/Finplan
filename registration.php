@@ -11,17 +11,23 @@ include "header.php";
         name="username" 
         id="username" 
         pattern="[\w\.]{1,64}"
-        title ="Numbers, letters (case sensitive), underscore and dot are allowed. 64 characters max" required/>
+        title="Numbers, letters (case sensitive), underscore and dot are allowed. 64 characters max" required/>
   </div> 
 
   <div>
     <label for="email">E-mail</label>
-    <input type="email" name="email" id="email" required/>
+    <input type="email" 
+        name="email" 
+        id="email" required/>
   </div>    
 
   <div>
     <label for="password1">Password</label>
-    <input type="password" name="password1" id="password1" pattern=".{8,256}" required/>
+    <input type="password" 
+        name="password1" 
+        id="password1" 
+        pattern=".{8,256}" 
+        title="8 characters minimum" required/>
   </div>
 
   <div>
@@ -36,12 +42,20 @@ include "header.php";
 
   <div>
     <label for="firstname">First-name</label>
-    <input type="text" name="firstname" id="firstname" pattern="[-a-zA-z]{1,30}" required/>
+    <input type="text" 
+        name="firstname" 
+        id="firstname" 
+        pattern="[-a-zA-z]{1,30}"
+        title="Only letters" required/>
   </div> 
 
   <div>
     <label for="lastname">Last-name</label>
-    <input type="text" name="lastname" id="lastname" pattern="[-a-zA-z]{1,30}" required/>
+    <input type="text" 
+        name="lastname" 
+        id="lastname" 
+        pattern="[-a-zA-z]{1,30}" 
+        title="Only letters" required/>
   </div> 
 
   <div>
