@@ -39,12 +39,20 @@ while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
 <form method="post" action="checkpayment.php">
     <div>
     <label for="cbnum">Bank card number</label>
-    <input type="text" name="cbnum" id="cbnum" required/>
+    <input type="text" 
+        name="cbnum"
+        id="cbnum"
+        pattern="[0-9]{15,16}"
+        title="The 15 or 16 digits of your bank card" required/>
     </div> 
 
     <div>
     <label for="CVV">Verification digits</label>
-    <input type="text" name="CVV" id="CVV" required/>
+    <input type="text" 
+        name="CVV" 
+        id="CVV"
+        pattern="[0-9]{3}"
+        title="The three digits on the back of your card" required/>
     </div>
 
     <div>
@@ -78,7 +86,11 @@ while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
 
     <div>
         <label for="namecard">Name on the card</label>
-        <input type="text" name="namecard" id="namecard" required/>
+        <input type="text" 
+            name="namecard" 
+            id="namecard"
+            pattern="[-a-zA-Z\s]*"
+            title="Only letters" required/>
     </div>
 
     <div>
