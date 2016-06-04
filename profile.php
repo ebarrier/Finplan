@@ -40,8 +40,6 @@ if($_SESSION["userid"] != null && $_SERVER['REQUEST_METHOD'] == "POST") {
     header("index.php");
 }
 
-
-
 $statement1 = $conn->prepare("
     SELECT username, email, fname, lname, gender, phonecode, phonenum, 
         dob, address, city, postal_code, countryname
@@ -61,8 +59,10 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
         <input type="text" 
             name="username" 
             id="username" 
-            value="<?php echo $row1["username"];?>" 
-            placeholder="your username" required/>
+            value="<?php echo $row1["username"];?>"
+            pattern="[\w\.]{1,64}"
+            placeholder="your username"
+            title="Numbers, letters (case sensitive), underscore and dot are allowed. 64 characters max" required/>
     </div> 
 
     <div>
@@ -80,6 +80,8 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
             name="firstname" 
             id="firstname" 
             value="<?php echo $row1["fname"];?>" 
+            pattern="[-a-zA-z]{1,30}"
+            title="Only letters"
             placeholder="your first name" required/>
     </div> 
 
@@ -88,7 +90,9 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
         <input type="text" 
             name="lastname" 
             id="lastname" 
-            value="<?php echo $row1["lname"];?>" 
+            value="<?php echo $row1["lname"];?>"
+            pattern="[-a-zA-z]{1,30}"
+            title="Only letters"
             placeholder="your last name" required/>
     </div>
     
@@ -136,20 +140,22 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
             }
             
             if ($row1["phonenum"] == 0) { ?>
-                <input type="number" 
+                <input type="text" 
                     name="phonenum" 
                     id="phonenum" 
                     value="-" 
-                    min ="0" 
+                    pattern="[0-9]*"
+                    title="Only numbers"
                     placeholder="phone number"/>                
             <?php
             }
             else { ?>
-                <input type="number" 
+                <input type="text" 
                     name="phonenum" 
                     id="phonenum" 
                     value="<?php echo $row1["phonenum"];?>" 
-                    min ="0" 
+                    pattern="[0-9]*"
+                    title="Only numbers"
                     placeholder="phone number"/>
             <?php
             }
@@ -161,17 +167,21 @@ $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
         <label for="dob">Date of birth</label>
             <?php
             if($row1["dob"] == "0000-00-00") { ?>
-                <input type="date" 
+                <input type="text" 
                     name="dob" 
-                    min="(Date('Y')-90)-01-01" 
+                    min="(Date('Y')-90)-01-01"
+                    pattern="[19|20][0-9]{2}-[0|1][0-9]-[0-3][0-9]"
+                    title="The date format must be YYYY-MM-DD"
                     placeholder="yyyy-mm-dd">
             <?php
             }
             else { ?>
-                <input type="date" 
+                <input type="text" 
                     name="dob" 
                     value="<?php echo $row1["dob"]; ?>" 
-                    min="(Date('Y')-90)-01-01" 
+                    min="(Date('Y')-90)-01-01"
+                    pattern="(19|20)[0-9]{2}-(0|1)[0-9]-[0-3][0-9]"
+                    title="The date format must be YYYY-MM-DD"
                     placeholder="yyyy-mm-dd">
             <?php
             }
