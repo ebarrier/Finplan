@@ -47,12 +47,22 @@ else {
 
     <div>
         <label for="newpass">Enter your new password</label>
-        <input type="password" name="newpass" id="newpass" placeholder="your new password" required/>
+        <input type="password" 
+            name="newpass" 
+            id="newpass" pattern=".{8,256}"
+            placeholder="type a password"
+            title="8 characters minimum" required/>
     </div>
     
     <div>
         <label for="confirmnewpass">Confirm your new password</label>
-        <input type="password" name="confirmnewpass" id="confirmnewpass" placeholder="repeat new password" required/>
+        <input type="password" 
+            name="confirmnewpass" 
+            id="confirmnewpass" 
+            onkeyup="checkPass(); return false;"
+            placeholder="retype your password"
+            pattern=".{8,256}" required/>
+        <span id="confirmMessage" class="confirmMessage"></span>
     </div>
 
     <input type="submit" value="Change password"/>
@@ -60,6 +70,8 @@ else {
 
 <br>
 <a href="profile.php">Go back to profile</a>
+
+<script src="js/checkPass.js"></script>
 <?php
 include 'footer.php';
 ?>
