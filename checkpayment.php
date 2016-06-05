@@ -2,6 +2,7 @@
 include "header.php";
 require_once "config.php";
 include "dbconn.php";
+include "headershop.php";
 
 if($_SESSION["orderid"] == null || $_SERVER['REQUEST_METHOD'] != "POST") {
     header("index.php");
@@ -16,12 +17,15 @@ $statement->bindParam(':orderid', $_POST["orderid"]);
 if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
 ?>
 
-<h1>Payment successful</h1>
+<div class="content">
+    <h2>Payment successful</h2>
+    <h3>Thank you for shopping with us!</h3>
 
-<br>
-<a href="orders.php">View your orders</a>
-<br>
-<a href="index.php">Go back to main page</a>
+    <div id="backToMain">
+        <a href="orders.php">View your orders</a><br>
+        <a href="index.php">Go back to main page</a>
+    </div>
+</div>
 
 <?php
 include "footer.php";

@@ -42,9 +42,10 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
               <option value="4">4</option>
             </select>
         </form>
-    <p>
-    <a href="index.php">Go back to main page</a>
-    </p>
+    </div>
+
+    <div id="backToMain">
+        <a href="index.php">Go back to main page</a>
     </div>
 
 </div>
