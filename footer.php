@@ -1,4 +1,4 @@
-</div>
+<script src="js/myJS.js"></script>
 </body>
 
 <footer>

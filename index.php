@@ -29,7 +29,6 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) { ?>
 ?>
 <div class="clearfix"></div>
 
-<script src="js/myJS.js"></script>
 <?php
 include "footer.php";
 ?>
