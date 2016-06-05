@@ -5,7 +5,7 @@ include "dbconn.php";
 include "headershop.php";
 
 $statement = $conn->prepare("
-    SELECT name, description, price 
+    SELECT name, description, price, hash
     FROM product 
     WHERE id = :productID");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
@@ -15,9 +15,13 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
 <div class="content">
 
-    <h3 class="row col-12"><?php print($row["name"]); ?></h3>
-    <h4 class="row col-12"><?php print($row["price"]); ?> eur</h4>
-
+    <h2 class="row col-12"><?php print($row["name"]); ?></h2>
+    <h3 class="row col-12"><?php print($row["price"]); ?> eur</h3>
+    <div class="pic">
+        <a target="_blank" href="uploads/<?=$row['hash']?>">
+          <img src="small/<?=$row['hash']?>" alt="<?=$row["name"]?>" width="250" height="auto">
+        </a>
+    </div>
     <div class="description row">
         <p>
           <?php print($row["description"]); ?>

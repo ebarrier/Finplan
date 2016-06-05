@@ -73,7 +73,7 @@ h4 {
 }
 
 .content {
-    margin: 0em 6em;
+    margin: 0em 10em;
 }
 
 .loginButton, .registration, .greeting, .logOut {
@@ -166,13 +166,17 @@ div.desc {
     clear: both;
 }
 
+.pic {
+    text-align: center;
+}
+
 footer, .footer, .addToCart {
     height: 120px;
     padding: 20px 0px;
     text-align: center;
 }
 
-.addToCart {
+.addToCart, #backToMain {
     height: 100px;
     padding-top: 20px;
     margin-top: 1em;
