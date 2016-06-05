@@ -1,6 +1,6 @@
 <div class="header row">
     <div class="col-2">&nbsp;</div>
-    <h1 class="col-8">Etienne's webshop</h1>
+    <h1 class="col-8"><img src="css/webshoplogo.png" alt="Etienne's Webshop" height="115"></h1>
 
     <?php
     if (array_key_exists("userid", $_SESSION) && $_SESSION["userid"] != NULL) {
@@ -35,8 +35,8 @@
             <a href=# onclick="showLogin(); return false;">Log in</a>
             <div class="loginPanel" id="loginPanel" style="display:none">
                 <form action="login.php" method="post">
-                    <input type="text" name="username/email" placeholder="username or email" required/>
-                    <input type="password" name="password" placeholder="password" required/>
+                    <input class="loginField" type="text" name="username/email" placeholder="username or email" required/>
+                    <input class="loginField" type="password" name="password" placeholder="password" required/>
                     <input id="loginPanelSubmit" type="submit" value="Log in!"/>
                 </form>
             </div>

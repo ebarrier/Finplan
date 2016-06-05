@@ -2,6 +2,7 @@
 include "header.php";
 require_once "config.php";
 include "dbconn.php";
+include "headershop.php";
 
 $statement = $conn->prepare("
     SELECT name, description, price 
