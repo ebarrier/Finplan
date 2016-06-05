@@ -12,6 +12,8 @@ if (!array_key_exists("cart", $_SESSION)) {
 <head>
 <meta charset="utf-8"/>
 <meta name="description" content="Etienne's webshop">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="css/main.css">
 <title>Etienne's webshop</title>
 </head>
 

@@ -71,7 +71,7 @@ else {
 <br>
 <a href="profile.php">Go back to profile</a>
 
-<script src="js/checkPass.js"></script>
+<script src="js/myJS.js"></script>
 <?php
 include 'footer.php';
 ?>

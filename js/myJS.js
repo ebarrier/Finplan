@@ -1,5 +1,4 @@
-function checkPass()
-{
+function checkPass() {
     //Store the password field objects into variables ...
     var pass1 = document.getElementById('password1');
     var pass2 = document.getElementById('password2');
@@ -17,7 +16,7 @@ function checkPass()
         pass2.style.backgroundColor = goodColor;
         message.style.color = goodColor;
         message.innerHTML = "Passwords match"
-    }else{
+    } else {
         //The passwords do not match.
         //Set the color to the bad color and
         //notify the user.
@@ -25,4 +24,14 @@ function checkPass()
         message.style.color = badColor;
         message.innerHTML = "Passwords do not match"
     }
-}  
+} 
+
+function showLogin() {
+    var panelDisplay = document.getElementById('loginPanel');
+    if (panelDisplay.style.display=='none') {
+        panelDisplay.style.display='block';    
+    } else {
+        panelDisplay.style.display='none';    
+    }   
+}
+

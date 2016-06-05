@@ -73,7 +73,7 @@ include "header.php";
 <br>
 <a href="index.php">Go back to main page</a>
 
-<script src="js/checkPass.js"></script>
+<script src="js/myJS.js"></script>
 
 <?php
 include "footer.php";
