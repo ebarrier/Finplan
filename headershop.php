@@ -1,3 +1,4 @@
+
 <div class="header row">
     <div class="col-2">&nbsp;</div>
     <h1 class="col-8"><img src="css/webshoplogo.png" alt="Etienne's Webshop" height="115"></h1>
