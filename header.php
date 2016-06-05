@@ -17,6 +17,4 @@ if (!array_key_exists("cart", $_SESSION)) {
 <title>Etienne's webshop</title>
 </head>
 
-
 <body>
-<div id="content">
