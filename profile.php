@@ -34,7 +34,7 @@ if($_SESSION["userid"] != null && $_SERVER['REQUEST_METHOD'] == "POST") {
     $statement0->bindParam(':postalcode', $_POST["postalcode"]);
     $statement0->bindParam(':countryname', $_POST["country"]);
     $statement0->bindParam(':userid', $_SESSION["userid"]);
-    if (!$statement0->execute()) die("Execute failed: (" . $statement0->errno . ") " . $statement0->error);
+    if (!$statement0->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
 } else {
     header("index.php");
 }
@@ -46,7 +46,7 @@ $statement1 = $conn->prepare("
     WHERE id = :userid");
 if (!$statement1) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement1->bindParam(':userid', $_SESSION["userid"]);
-if (!$statement1->execute()) die("Execute failed: (" . $statement1->errno . ") " . $statement1->error);
+if (!$statement1->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
 $row1 = $statement1->fetch(PDO::FETCH_ASSOC);
 ?>
 

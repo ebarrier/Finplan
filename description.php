@@ -10,7 +10,7 @@ $statement = $conn->prepare("
     WHERE id = :productID");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':productID', $_GET["id"]); //GET to extract it from the page's URL (?id=12)
-if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+if (!$statement->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
 $row = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
 <div class="content">

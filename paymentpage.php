@@ -28,7 +28,7 @@ $statement = $conn->prepare("
     WHERE order_item.order_id = :orderId"); 
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':orderId', $orderid);
-if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+if (!$statement->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
 $orderAmount=null;
 while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
     $orderAmount += $result["subTotal"];

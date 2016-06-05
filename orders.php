@@ -36,7 +36,7 @@ $statement = $conn->prepare("
     ORDER BY `order`.`created` DESC");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':userid', $_SESSION["userid"]);
-if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error); ?>
+if (!$statement->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo()); ?>
 
 <div class="content">
     <h2>My orders</h2>
@@ -58,7 +58,7 @@ if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " .
                 WHERE order_item.order_id = :orderId"); 
             if (!$statement2) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
             $statement2->bindParam(':orderId', $result["orderid"]);
-            if (!$statement2->execute()) die("Execute failed: (" . $statement2->errno . ") " . $statement2->error);
+            if (!$statement2->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
             $orderAmount=null;
             while ($result2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
                 $orderAmount += $result2["subTotal"];

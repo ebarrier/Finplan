@@ -12,7 +12,7 @@ $statement = $conn->prepare("
     VALUES (:userid)");
 if (!$statement) die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 $statement->bindParam(':userid', $_SESSION["userid"]);
-if (!$statement->execute()) die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+if (!$statement->execute()) die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
 
 $order_id = $conn->lastInsertId(); // This contains the ID for the inserted order
 $_SESSION["orderid"] = $order_id;
@@ -27,7 +27,7 @@ foreach ($_SESSION["cart"] as $product_id => $count) {
     $statement->bindParam(':productid', $product_id);
     $statement->bindParam(':productcount', $count);
 	if (!$statement->execute()) {
-		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("Execute failed: (" . $statement->errorCode() . ") " . $statement->errorInfo());
 	}
 }
 
